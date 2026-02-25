@@ -1,0 +1,48 @@
+@model IEnumerable<BatchDelivery.Models.DeliveryBatch>
+
+@{
+    ViewData["Title"] = "Delivery Batches";
+}
+
+<h2>Delivery Batches</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Batch ID</th>
+            <th>Source Hub</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th>Total Orders</th>
+            <th>Carbon Savings</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var batch in Model)
+        {
+            <tr>
+                <td>@batch.DeliveryBatchIdentifier</td>
+                <td>@batch.SourceHub</td>
+                <td>@batch.DestinationAddress</td>
+                <td>@batch.DeliveryBatchStatus</td>
+                <td>@batch.TotalOrders</td>
+                <td>@batch.CarbonSavings kg CO₂</td>
+                <td>
+                    <a asp-action="HandleBatchSelection"
+                       asp-route-batchId="@batch.DeliveryBatchIdentifier"
+                       class="btn btn-sm btn-primary">
+                        View
+                    </a>
+                    <form asp-action="ConsolidateOrder" method="post" style="display:inline;">
+                        <input type="hidden" name="orderId"
+                               value="@batch.DeliveryBatchIdentifier" />
+                        <button type="submit" class="btn btn-sm btn-success">
+                            Consolidate
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -2,6 +2,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<BatchDelivery.Gateways.DeliveryBatchMapper>(sp =>
+    new BatchDelivery.Gateways.DeliveryBatchMapper(null!));
 
 var app = builder.Build();
 
